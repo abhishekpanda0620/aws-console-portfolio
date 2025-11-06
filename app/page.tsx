@@ -45,7 +45,7 @@ export default function PortfolioConsole() {
       {/* Widgets Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Projects Widget */}
-        <div className="border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 lg:col-span-2">
+        <div id="projects" className="border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 lg:col-span-2 scroll-mt-6">
           <div className="flex items-center justify-between p-4 border-b border-gray-300 dark:border-gray-700">
             <div className="flex items-center space-x-2">
               <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center space-x-2">
@@ -133,7 +133,7 @@ export default function PortfolioConsole() {
         </div>
 
         {/* Certifications Widget */}
-        <div className="border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800">
+        <div id="certifications" className="border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 scroll-mt-6">
           <div className="flex items-center justify-between p-4 border-b border-gray-300 dark:border-gray-700">
             <div className="flex items-center space-x-2">
               <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center space-x-2">
@@ -178,7 +178,7 @@ export default function PortfolioConsole() {
         </div>
 
         {/* Experience Widget */}
-        <div className="border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800">
+        <div id="experience" className="border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 scroll-mt-6">
           <div className="flex items-center justify-between p-4 border-b border-gray-300 dark:border-gray-700">
             <div className="flex items-center space-x-2">
               <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center space-x-2">
@@ -218,7 +218,7 @@ export default function PortfolioConsole() {
         </div>
 
         {/* Skills Widget */}
-        <div className="border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800">
+        <div id="skills" className="border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 scroll-mt-6">
           <div className="flex items-center justify-between p-4 border-b border-gray-300 dark:border-gray-700">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
               Skills & Technologies
@@ -279,7 +279,7 @@ export default function PortfolioConsole() {
         </div>
 
         {/* Blog Posts Widget */}
-        <div className="border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800">
+        <div id="blog" className="border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 scroll-mt-6">
           <div className="flex items-center justify-between p-4 border-b border-gray-300 dark:border-gray-700">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
               Blog & Articles
@@ -318,7 +318,7 @@ export default function PortfolioConsole() {
         </div>
 
         {/* Achievements Widget */}
-        <div className="border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 lg:col-span-2">
+        <div id="achievements" className="border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 lg:col-span-2 scroll-mt-6">
           <div className="flex items-center justify-between p-4 border-b border-gray-300 dark:border-gray-700">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
               🏆 Key Achievements
@@ -346,7 +346,7 @@ export default function PortfolioConsole() {
         </div>
 
         {/* Career Timeline */}
-        <div className="border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 lg:col-span-2">
+        <div id="timeline" className="border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 lg:col-span-2 scroll-mt-6">
           <div className="flex items-center justify-between p-4 border-b border-gray-300 dark:border-gray-700">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
               🗺️ Career Journey
