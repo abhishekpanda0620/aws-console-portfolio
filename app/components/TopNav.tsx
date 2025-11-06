@@ -1,9 +1,9 @@
 "use client";
-import { Search, Bell, HelpCircle, Settings, ChevronDown, Sun, Moon, Monitor } from "lucide-react";
+import { Search, Bell, HelpCircle, Settings, ChevronDown, Sun, Moon, Monitor, X } from "lucide-react";
 import { useState, useEffect, useRef } from 'react';
 import { portfolioData } from '../data/portfolio';
 
-// Simple theme hook that doesn't throw errors
+// Simple theme hook
 function useSimpleTheme() {
   const [theme, setThemeState] = useState<'light' | 'dark' | 'system'>('light');
   const [mounted, setMounted] = useState(false);
@@ -13,7 +13,6 @@ function useSimpleTheme() {
     const saved = localStorage.getItem('aws-console-theme') as 'light' | 'dark' | 'system';
     if (saved) {
       setThemeState(saved);
-      // Apply the saved theme immediately
       const root = document.documentElement;
       let effectiveTheme: 'light' | 'dark';
       
@@ -41,15 +40,13 @@ function useSimpleTheme() {
       effectiveTheme = newTheme;
     }
     
-    // Apply theme in multiple ways for compatibility
     root.classList.remove('light', 'dark');
     root.classList.add(effectiveTheme);
     root.setAttribute('data-theme', effectiveTheme);
     root.style.colorScheme = effectiveTheme;
     
-    // Force a repaint
     document.body.style.display = 'none';
-    document.body.offsetHeight; // Trigger reflow
+    document.body.offsetHeight;
     document.body.style.display = '';
   };
 
@@ -59,7 +56,11 @@ function useSimpleTheme() {
 export default function TopNav() {
   const { theme, setTheme, mounted } = useSimpleTheme();
   const [showThemeMenu, setShowThemeMenu] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [showSearchResults, setShowSearchResults] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!mounted) return;
@@ -68,16 +69,69 @@ export default function TopNav() {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setShowThemeMenu(false);
       }
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setShowSearchResults(false);
+      }
     }
 
-    if (showThemeMenu) {
-      document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [mounted]);
+
+  // Search functionality
+  useEffect(() => {
+    if (searchQuery.length < 2) {
+      setSearchResults([]);
+      setShowSearchResults(false);
+      return;
     }
 
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [showThemeMenu, mounted]);
+    const query = searchQuery.toLowerCase();
+    const results: any[] = [];
+
+    // Search projects
+    portfolioData.projects.forEach(project => {
+      if (project.name.toLowerCase().includes(query) || 
+          project.description.toLowerCase().includes(query) ||
+          project.technologies.some(tech => tech.toLowerCase().includes(query))) {
+        results.push({ type: 'Project', name: project.name, section: 'projects' });
+      }
+    });
+
+    // Search skills
+    const allSkills = [...portfolioData.skills.cloud, ...portfolioData.skills.frontend, ...portfolioData.skills.backend];
+    allSkills.forEach(skill => {
+      if (skill.toLowerCase().includes(query)) {
+        results.push({ type: 'Skill', name: skill, section: 'skills' });
+      }
+    });
+
+    // Search certifications
+    portfolioData.certifications.forEach(cert => {
+      if (cert.name.toLowerCase().includes(query)) {
+        results.push({ type: 'Certification', name: cert.name, section: 'certifications' });
+      }
+    });
+
+    // Search blog
+    portfolioData.blog.forEach(post => {
+      if (post.title.toLowerCase().includes(query)) {
+        results.push({ type: 'Blog', name: post.title, section: 'blog' });
+      }
+    });
+
+    setSearchResults(results.slice(0, 8)); // Limit to 8 results
+    setShowSearchResults(results.length > 0);
+  }, [searchQuery]);
+
+  const handleSearchResultClick = (section: string) => {
+    const element = document.getElementById(section);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    setSearchQuery('');
+    setShowSearchResults(false);
+  };
 
   if (!mounted) {
     return (
@@ -106,14 +160,49 @@ export default function TopNav() {
         </button>
 
         {/* Search Bar */}
-        <div className="relative">
+        <div className="relative" ref={searchRef}>
           <div className="absolute left-3 top-2.5 text-gray-400">
             <Search size={16} />
           </div>
           <input
-            className="pl-10 pr-4 py-2 rounded bg-gray-700 dark:bg-[#37475a] text-white text-sm border border-gray-600 focus:outline-none focus:border-[#ff9900] focus:ring-1 focus:ring-[#ff9900] w-96"
-            placeholder="Search projects, skills, experience... [Alt+S]"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onFocus={() => searchResults.length > 0 && setShowSearchResults(true)}
+            className="pl-10 pr-10 py-2 rounded bg-gray-700 dark:bg-[#37475a] text-white text-sm border border-gray-600 focus:outline-none focus:border-[#ff9900] focus:ring-1 focus:ring-[#ff9900] w-96"
+            placeholder="Search projects, skills, certifications..."
           />
+          {searchQuery && (
+            <button
+              onClick={() => {
+                setSearchQuery('');
+                setShowSearchResults(false);
+              }}
+              className="absolute right-3 top-2.5 text-gray-400 hover:text-white"
+            >
+              <X size={16} />
+            </button>
+          )}
+          
+          {/* Search Results Dropdown */}
+          {showSearchResults && searchResults.length > 0 && (
+            <div className="absolute top-full mt-2 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded shadow-lg z-50 max-h-96 overflow-y-auto">
+              <div className="py-2">
+                {searchResults.map((result, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleSearchResultClick(result.section)}
+                    className="w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-between"
+                  >
+                    <div>
+                      <div className="text-sm font-medium text-gray-900 dark:text-white">{result.name}</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400">{result.type}</div>
+                    </div>
+                    <ChevronDown size={14} className="text-gray-400 rotate-[-90deg]" />
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

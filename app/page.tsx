@@ -1,6 +1,14 @@
 "use client";
 import { MoreVertical, Plus, ExternalLink, Github, Linkedin, Mail, Award, Code, Briefcase } from 'lucide-react';
+import { FaAws } from 'react-icons/fa';
+import { SiGooglecloud } from 'react-icons/si';
 import { portfolioData } from './data/portfolio';
+
+// Icon mapping for certifications
+const iconMap: Record<string, any> = {
+  FaAws: FaAws,
+  SiGooglecloud: SiGooglecloud,
+};
 
 export default function PortfolioConsole() {
   return (
@@ -147,32 +155,37 @@ export default function PortfolioConsole() {
           </div>
           <div className="p-6">
             <div className="space-y-4">
-              {portfolioData.certifications.map((cert, index) => (
-                <div
-                  key={index}
-                  className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-[#ff9900] dark:hover:border-[#ff9900] transition-colors bg-white dark:bg-gray-900"
-                >
-                  <div className="flex items-start space-x-3">
-                    <span className="text-2xl">{cert.icon}</span>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
-                        {cert.name}
-                      </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
-                        {cert.issuer}
-                      </p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-gray-500 dark:text-gray-500">
-                          Issued: {cert.date}
-                        </span>
-                        <span className="text-xs px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded">
-                          Verified
-                        </span>
+              {portfolioData.certifications.map((cert, index) => {
+                const IconComponent = iconMap[cert.icon] || FaAws;
+                return (
+                  <div
+                    key={index}
+                    className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-[#ff9900] dark:hover:border-[#ff9900] transition-colors bg-white dark:bg-gray-900"
+                  >
+                    <div className="flex items-start space-x-3">
+                      <div className="p-3  bg-opacity-10 rounded-lg">
+                        <IconComponent size={28} className="text-[#ff9900]" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                          {cert.name}
+                        </h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                          {cert.issuer}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-gray-500 dark:text-gray-500">
+                            Issued: {cert.date}
+                          </span>
+                          <span className="text-xs px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded">
+                            Verified
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

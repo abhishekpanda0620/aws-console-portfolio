@@ -117,8 +117,16 @@ export const portfolioData = {
       issuer: "Amazon Web Services",
       date: "2023",
       credentialId: "AWS-SAA-2023",
-      icon: "☁️",
+      icon: "FaAws",
     },
+    {
+      name: "Google Cloud Professional Cloud Architect",
+      issuer: "Google Cloud",
+      date: "2025",
+      credentialId: "GCP-PCA-2025",
+      icon: "SiGooglecloud",
+    }
+    
   ],
 
   experience: [
