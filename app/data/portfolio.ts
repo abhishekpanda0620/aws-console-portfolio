@@ -1,5 +1,3 @@
-import { Link } from "lucide-react";
-
 export const portfolioData = {
   personal: {
     name: "Abhishek Panda",

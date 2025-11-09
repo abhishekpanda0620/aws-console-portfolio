@@ -46,7 +46,7 @@ function useSimpleTheme() {
     root.style.colorScheme = effectiveTheme;
     
     document.body.style.display = 'none';
-    document.body.offsetHeight;
+    void document.body.offsetHeight; // Force reflow
     document.body.style.display = '';
   };
 
@@ -57,7 +57,11 @@ export default function TopNav() {
   const { theme, setTheme, mounted } = useSimpleTheme();
   const [showThemeMenu, setShowThemeMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searchResults, setSearchResults] = useState<Array<{
+    type: string;
+    name: string;
+    section: string;
+  }>>([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
@@ -87,7 +91,11 @@ export default function TopNav() {
     }
 
     const query = searchQuery.toLowerCase();
-    const results: any[] = [];
+    const results: Array<{
+      type: string;
+      name: string;
+      section: string;
+    }> = [];
 
     // Search projects
     portfolioData.projects.forEach(project => {

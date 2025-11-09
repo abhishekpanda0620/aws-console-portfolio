@@ -1,7 +1,6 @@
 "use client";
 import {
   Star,
-  Home,
   Grid3x3,
   Code,
   Award,

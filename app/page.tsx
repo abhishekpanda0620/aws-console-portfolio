@@ -35,7 +35,7 @@ import { useState, useEffect, ReactNode } from "react";
 import DraggableWidget from "./components/DraggableWidget";
 
 // Icon mapping for certifications
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   FaAws: FaAws,
   SiGooglecloud: SiGooglecloud,
   SiMicrosoftazure: VscAzure,
