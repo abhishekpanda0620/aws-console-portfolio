@@ -1,3 +1,5 @@
+import { Link } from "lucide-react";
+
 export const portfolioData = {
   personal: {
     name: "Abhishek Panda",
@@ -22,7 +24,7 @@ export const portfolioData = {
       "Azure (VMs, Functions, Blob Storage)",
       "Kubernetes",
     ],
-    databases: ["PostgreSQL", "Redis",  "MySQL"],
+    databases: ["PostgreSQL", "Redis", "MySQL"],
     tools: ["Git", "CI/CD", "Jenkins", "GitHub Actions", "Terraform"],
   },
 
@@ -115,32 +117,43 @@ export const portfolioData = {
     {
       name: "AWS Certified Solutions Architect – Associate",
       issuer: "Amazon Web Services",
-      date: "2024",
-      credentialId: "AWS-SAA-2023",
+      date: "Feb 2024",
+      credentialId: "248a3b43-a5f7-4e36-813f-a13c25458b62",
       icon: "FaAws",
+      Link:"https://www.credly.com/badges/248a3b43-a5f7-4e36-813f-a13c25458b62/public_url",
     },
     {
       name: "Google Cloud Professional Cloud Architect",
       issuer: "Google Cloud",
-      date: "2025",
-      credentialId: "GCP-PCA-2025",
+      date: "Sept 2025",
+      credentialId: "63ac8733-9c18-41c2-8060-474ae7bc6bac",
       icon: "SiGooglecloud",
+      Link: "https://www.credly.com/badges/63ac8733-9c18-41c2-8060-474ae7bc6bac/public_url",
     },
-        {
-      name: "Google Cloud Professional Cloud Architect",
+    {
+      name: "Google Cloud Associate Cloud Engineer",
       issuer: "Google Cloud",
-      date: "2025",
-      credentialId: "GCP-PCA-2025",
+      date: "Dec 2024",
+      credentialId: "5b85f9f8-5291-41aa-b315-5f944136b81c",
       icon: "SiGooglecloud",
+      Link: "https://www.credly.com/badges/5b85f9f8-5291-41aa-b315-5f944136b81c/public_url",
     },
-        {
+    {
       name: "Microsoft Certified: Azure Fundamentals",
       issuer: "Microsoft",
-      date: "2025",
-      credentialId: "AZ-900",
+      date: "Jun 2025",
+      credentialId: "EB90B013FAA01CDA",
       icon: "SiMicrosoftazure",
-    }
-    
+      Link:"https://learn.microsoft.com/api/credentials/share/en-us/AbhishekPanda-6086/EB90B013FAA01CDA?sharingId=E82D31577B8D79D2",
+    },
+    {
+      name: "Microsoft Certified: Azure AI Fundamentals",
+      issuer: "Microsoft",
+      date: "Jun 2024",
+      credentialId: "C0ED524F40C4D5D",
+      icon: "SiMicrosoftazure",
+      Link: "https://learn.microsoft.com/api/credentials/share/en-us/AbhishekPanda-6086/C0ED524F40C4D5D?sharingId=E82D31577B8D79D2",
+    },
   ],
 
   experience: [
@@ -195,20 +208,21 @@ export const portfolioData = {
   blog: [
     {
       title: "Terraform with AWS: The IAC Magic 🪄💻",
-      date: "2024-01",
+      date: "2025-01",
       url: "https://medium.com/@abhishek.panda_69251/terraform-with-aws-the-iac-magic-90bb4d090b9d",
       views: "",
     },
     {
       title: "Deploying an EC2 Instance ASAP !",
-      date: "2023-11",
+      date: "2024-08",
       url: "https://medium.com/aws-tip/deploying-an-ec2-instance-asap-a7d25f7b3a97",
       views: "",
     },
     {
-      title: "Optimizing React Performance in Production",
-      date: "2023-09",
-      url: "https://medium.com/@abhishekpanda/react-optimization",
+      title:
+        "Launch Your First Website on AWS EC2 with Your Own Subdomain & HTTPS - The Beginner Friendly Way! 🌐🔒",
+      date: "2025-09",
+      url: "https://medium.com/@abhishek.panda0620/launch-your-first-website-on-aws-ec2-with-your-own-subdomain-https-the-beginner-friendly-1159e4aa1556",
       views: "",
     },
   ],

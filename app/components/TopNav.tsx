@@ -144,31 +144,20 @@ export default function TopNav() {
   }
 
   return (
-    <header className="w-full bg-gray-800 py-1 dark:bg-aws-blue h-12 flex items-center justify-between border-b border-gray-700 px-4">
+    <header className="w-full bg-gray-800 py-1 dark:bg-aws-blue h-12 flex items-center justify-between border-b border-gray-700 px-2 sm:px-4">
       {/* Left Section */}
-      <div className="flex items-center space-x-4">
-        {/* AWS Logo */}
-        {/* <div className="flex items-center space-x-2">
-          <div className="text-white font-bold text-sm">aws</div>
-        </div> */}
-
-        {/* Services Menu */}
-        {/* <button className="text-white text-sm hover:bg-gray-700 dark:hover:bg-[#37475a] px-3 py-1.5 rounded flex items-center space-x-1">
-          <span>Portfolio</span>
-          <ChevronDown size={14} />
-        </button> */}
-
+      <div className="flex items-center space-x-2 sm:space-x-4 flex-1">
         {/* Search Bar */}
-        <div className="relative" ref={searchRef}>
-          <div className="absolute left-3 top-2.5 text-gray-400">
-            <Search size={16} />
+        <div className="relative flex-1 max-w-md" ref={searchRef}>
+          <div className="absolute left-2 sm:left-3 top-2 sm:top-2.5 text-gray-400">
+            <Search size={14} className="sm:w-4 sm:h-4" />
           </div>
           <input
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => searchResults.length > 0 && setShowSearchResults(true)}
-            className="pl-10 pr-10 py-2 rounded bg-gray-700 dark:bg-[#37475a] text-white text-sm border border-gray-600 focus:outline-none focus:border-[#ff9900] focus:ring-1 focus:ring-[#ff9900] w-96"
-            placeholder="Search projects, skills, certifications..."
+            className="pl-8 sm:pl-10 pr-8 sm:pr-10 py-1.5 sm:py-2 rounded bg-gray-700 dark:bg-[#37475a] text-white text-xs sm:text-sm border border-gray-600 focus:outline-none focus:border-[#ff9900] focus:ring-1 focus:ring-[#ff9900] w-full"
+            placeholder="Search..."
           />
           {searchQuery && (
             <button
@@ -176,9 +165,9 @@ export default function TopNav() {
                 setSearchQuery('');
                 setShowSearchResults(false);
               }}
-              className="absolute right-3 top-2.5 text-gray-400 hover:text-white"
+              className="absolute right-2 sm:right-3 top-2 sm:top-2.5 text-gray-400 hover:text-white"
             >
-              <X size={16} />
+              <X size={14} className="sm:w-4 sm:h-4" />
             </button>
           )}
           
@@ -206,20 +195,20 @@ export default function TopNav() {
       </div>
 
       {/* Right Section */}
-      <div className="flex items-center space-x-2">
-        {/* Support Icon */}
+      <div className="flex items-center space-x-1 sm:space-x-2">
+        {/* Support Icon - Hidden on mobile */}
         <a
           href="https://github.com/abhishekpanda1999"
           target="_blank"
           rel="noopener noreferrer"
-          className="p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white"
+          className="hidden sm:block p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white"
           title="GitHub"
         >
           <HelpCircle size={18} />
         </a>
 
-        {/* Notification Bell */}
-        <button className="relative p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white" title="Notifications">
+        {/* Notification Bell - Hidden on mobile */}
+        <button className="hidden sm:block relative p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white" title="Notifications">
           <Bell size={18} />
           <span className="absolute top-1 right-1 w-2 h-2 bg-[#ff9900] rounded-full"></span>
         </button>
@@ -228,10 +217,10 @@ export default function TopNav() {
         <div className="relative" ref={menuRef}>
           <button
             onClick={() => setShowThemeMenu(!showThemeMenu)}
-            className="p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white"
+            className="p-1.5 sm:p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white"
             title="Theme Settings"
           >
-            <Settings size={18} />
+            <Settings size={16} className="sm:w-[18px] sm:h-[18px]" />
           </button>
           
           {showThemeMenu && (
@@ -275,16 +264,17 @@ export default function TopNav() {
           )}
         </div>
 
-        {/* Region Selector */}
-        <button className="text-white text-sm hover:bg-gray-700 dark:hover:bg-[#37475a] px-3 py-1.5 rounded flex items-center space-x-1">
+        {/* Region Selector - Hidden on mobile */}
+        <button className="hidden md:flex text-white text-xs sm:text-sm hover:bg-gray-700 dark:hover:bg-[#37475a] px-2 sm:px-3 py-1.5 rounded items-center space-x-1">
           <span>India (ap-south-1)</span>
-          <ChevronDown size={14} />
+          <ChevronDown size={12} className="sm:w-[14px] sm:h-[14px]" />
         </button>
 
-        {/* User Account */}
-        <button className="text-white text-sm hover:bg-gray-700 dark:hover:bg-[#37475a] px-3 py-1.5 rounded flex items-center space-x-1">
-          <span>{portfolioData.personal.name}</span>
-          <ChevronDown size={14} />
+        {/* User Account - Simplified on mobile */}
+        <button className="text-white text-xs sm:text-sm hover:bg-gray-700 dark:hover:bg-[#37475a] px-2 sm:px-3 py-1.5 rounded flex items-center space-x-1">
+          <span className="hidden sm:inline">{portfolioData.personal.name}</span>
+          <span className="sm:hidden">AP</span>
+          <ChevronDown size={12} className="sm:w-[14px] sm:h-[14px]" />
         </button>
       </div>
     </header>

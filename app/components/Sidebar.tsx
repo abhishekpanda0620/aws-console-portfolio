@@ -22,7 +22,7 @@ export default function Sidebar() {
       label: "Certifications",
       icon: <Award size={16} />,
       href: "certifications",
-      count: 3,
+      count: 4,
     },
     { label: "Experience", icon: <Briefcase size={16} />, href: "experience" },
     { label: "Skills", icon: <Star size={16} />, href: "skills" },
@@ -36,6 +36,14 @@ export default function Sidebar() {
     const element = document.getElementById(href);
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
+      
+      // Add highlight effect
+      element.classList.add('ring-2', 'ring-[#ff9900]', 'ring-opacity-50');
+      
+      // Remove highlight after 2 seconds
+      setTimeout(() => {
+        element.classList.remove('ring-2', 'ring-[#ff9900]', 'ring-opacity-50');
+      }, 2000);
     }
   };
 
@@ -68,10 +76,10 @@ export default function Sidebar() {
                 <button
                   key={index}
                   onClick={() => handleNavClick(section.href)}
-                  className={`w-full px-6 py-2.5 text-left text-gray-300 dark:text-gray-300 text-sm hover:bg-gray-700 dark:hover:bg-[#37475a] hover:text-white flex items-center justify-between group transition-colors ${
+                  className={`w-full px-6 py-2.5 text-left text-sm hover:bg-gray-700 dark:hover:bg-[#37475a] hover:text-white flex items-center justify-between group transition-colors ${
                     activeSection === section.href
-                      ? "bg-gray-700 dark:bg-[#37475a] border-l-4 border-[#ff9900]"
-                      : ""
+                      ? "bg-gray-700 dark:bg-[#37475a] border-l-4 border-[#ff9900] text-white"
+                      : "text-gray-300 dark:text-gray-300"
                   }`}
                 >
                   <div className="flex items-center space-x-3">
@@ -80,11 +88,11 @@ export default function Sidebar() {
                         activeSection === section.href
                           ? "text-[#ff9900]"
                           : "text-gray-400 dark:text-gray-400"
-                      } group-hover:text-[#ff9900]`}
+                      } group-hover:text-[#ff9900] transition-colors`}
                     >
                       {section.icon}
                     </span>
-                    <span>{section.label}</span>
+                    <span className={activeSection === section.href ? "font-semibold" : ""}>{section.label}</span>
                   </div>
                   {section.count && (
                     <span className="text-xs px-2 py-0.5 bg-gray-700 dark:bg-[#37475a] text-gray-300 dark:text-gray-300 rounded">
@@ -164,28 +172,36 @@ export default function Sidebar() {
         <div className="flex-1 flex flex-col items-center py-4 space-y-4">
           <button
             onClick={() => handleNavClick("projects")}
-            className="p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white"
+            className={`p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded transition-colors ${
+              activeSection === "projects" ? "bg-gray-700 text-[#ff9900]" : "text-white"
+            }`}
             title="Projects"
           >
             <Code size={20} />
           </button>
           <button
             onClick={() => handleNavClick("certifications")}
-            className="p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white"
+            className={`p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded transition-colors ${
+              activeSection === "certifications" ? "bg-gray-700 text-[#ff9900]" : "text-white"
+            }`}
             title="Certifications"
           >
             <Award size={20} />
           </button>
           <button
             onClick={() => handleNavClick("experience")}
-            className="p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white"
+            className={`p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded transition-colors ${
+              activeSection === "experience" ? "bg-gray-700 text-[#ff9900]" : "text-white"
+            }`}
             title="Experience"
           >
             <Briefcase size={20} />
           </button>
           <button
             onClick={() => handleNavClick("skills")}
-            className="p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white"
+            className={`p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded transition-colors ${
+              activeSection === "skills" ? "bg-gray-700 text-[#ff9900]" : "text-white"
+            }`}
             title="Skills"
           >
             <Star size={20} />
