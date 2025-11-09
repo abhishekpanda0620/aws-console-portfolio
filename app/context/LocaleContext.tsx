@@ -201,7 +201,7 @@ type LocaleContextType = {
 const LocaleContext = createContext<LocaleContextType | undefined>(undefined);
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
-  const [region, setRegionState] = useState<Region>(regions[1]); // Default to India
+  const [region, setRegionState] = useState<Region>(regions[0]); // Default to US (English)
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -224,8 +224,20 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
     return translations[region.locale][key] || translations.en[key] || key;
   };
 
+  const value = {
+    locale: region.locale,
+    region,
+    setRegion,
+    t,
+  };
+
   if (!mounted) {
-    return <>{children}</>;
+    // Provide default context during SSR
+    return (
+      <LocaleContext.Provider value={value}>
+        {children}
+      </LocaleContext.Provider>
+    );
   }
 
   return (
