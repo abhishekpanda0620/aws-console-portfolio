@@ -163,7 +163,7 @@ export default function Sidebar() {
               </div>
               <div className="flex justify-between">
                 <span>{t('version')}:</span>
-                <span className="text-gray-200 dark:text-gray-200">v3.0</span>
+                <span className="text-gray-200 dark:text-gray-200">v3.1.0</span>
               </div>
             </div>
           </div>

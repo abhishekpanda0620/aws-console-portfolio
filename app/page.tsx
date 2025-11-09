@@ -17,6 +17,7 @@ import { VscAzure } from "react-icons/vsc";
 import { portfolioData } from "./data/portfolio";
 import { useLocale } from "./context/LocaleContext";
 // import MetricsWidget from "./components/MetricsWidget";
+import Loading from "./components/Loading";
 import {
   DndContext,
   closestCenter,
@@ -452,11 +453,7 @@ export default function PortfolioConsole() {
   };
 
   if (!mounted) {
-    return (
-      <div className="bg-white dark:bg-[#0d1117] min-h-full p-6">
-        Loading...
-      </div>
-    );
+    return <Loading />;
   }
 
   return (

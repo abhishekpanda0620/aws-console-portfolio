@@ -10,6 +10,30 @@ export type ChangelogEntry = {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: '3.1.0',
+    date: '2025-01-09',
+    type: 'minor',
+    changes: [
+      {
+        category: 'Added',
+        items: [
+          'Professional loading component with animated spinner and AWS branding',
+          'Custom 404 Not Found page with helpful navigation and error details',
+          'Comprehensive Changelog page with version history and upcoming features',
+          'Notification bell in top nav now links to Changelog',
+          'Quick access to Changelog from sidebar',
+        ],
+      },
+      {
+        category: 'Fixed',
+        items: [
+          'React hydration error in 404 page timestamp',
+          'Improved error handling and user feedback',
+        ],
+      },
+    ],
+  },
+  {
     version: '3.0.0',
     date: '2025-01-09',
     type: 'major',

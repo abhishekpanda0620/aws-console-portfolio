@@ -194,7 +194,7 @@ export default function TopNav() {
     return (
       <header className="w-full bg-gray-800 dark:bg-[#232f3e] h-12 flex items-center justify-between border-b border-gray-700 px-4">
         <div className="flex items-center space-x-4">
-          <div className="text-white text-sm">Loading...</div>
+          <div className="text-white text-sm"></div>
         </div>
       </header>
     );
