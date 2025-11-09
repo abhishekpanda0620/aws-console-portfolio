@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ReactNode } from "react";
 import "./globals.css";
 import ClientLayout from './components/ClientLayout';
+import { LocaleProvider } from './context/LocaleContext';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,9 +23,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ClientLayout>
-          {children}
-        </ClientLayout>
+        <LocaleProvider>
+          <ClientLayout>
+            {children}
+          </ClientLayout>
+        </LocaleProvider>
       </body>
     </html>
   );

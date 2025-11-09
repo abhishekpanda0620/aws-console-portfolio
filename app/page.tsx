@@ -1,6 +1,5 @@
 "use client";
 import {
-
   ExternalLink,
   Github,
   Linkedin,
@@ -16,6 +15,8 @@ import { FaAws } from "react-icons/fa";
 import { SiGooglecloud } from "react-icons/si";
 import { VscAzure } from "react-icons/vsc";
 import { portfolioData } from "./data/portfolio";
+import { useLocale } from "./context/LocaleContext";
+// import MetricsWidget from "./components/MetricsWidget";
 import {
   DndContext,
   closestCenter,
@@ -52,6 +53,7 @@ const defaultWidgetOrder = [
 ];
 
 export default function PortfolioConsole() {
+  const { t } = useLocale();
   const [widgetOrder, setWidgetOrder] = useState(defaultWidgetOrder);
   const [mounted, setMounted] = useState(false);
   const [isDragEnabled, setIsDragEnabled] = useState(true);
@@ -114,7 +116,7 @@ export default function PortfolioConsole() {
         <div className="p-3 sm:p-4 border-b border-gray-300 dark:border-gray-700">
           <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white flex items-center space-x-2">
             <Code size={18} className="text-[#ff9900]" />
-            <span>Projects ({portfolioData.projects.length})</span>
+            <span>{t('projects')} ({portfolioData.projects.length})</span>
           </h2>
         </div>
         <div className="p-3 sm:p-6 overflow-y-auto flex-1">
@@ -203,7 +205,7 @@ export default function PortfolioConsole() {
           <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white flex items-center space-x-2">
             <Award size={18} className="text-[#ff9900]" />
             <span>
-              Certifications ({portfolioData.certifications.length})
+              {t('certifications')} ({portfolioData.certifications.length})
             </span>
           </h2>
         </div>
@@ -249,10 +251,10 @@ export default function PortfolioConsole() {
                       </p>
                       <div className="flex items-center justify-between">
                         <span className="text-xs text-gray-500 dark:text-gray-500">
-                          Issued: {cert.date}
+                          {t('issued')}: {cert.date}
                         </span>
                         <span className="text-xs px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded">
-                          Verified
+                          {t('verified')}
                         </span>
                       </div>
                     </div>
@@ -272,7 +274,7 @@ export default function PortfolioConsole() {
         <div className="p-3 sm:p-4 border-b border-gray-300 dark:border-gray-700">
           <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white flex items-center space-x-2">
             <Briefcase size={18} className="text-[#ff9900]" />
-            <span>Experience</span>
+            <span>{t('experience')}</span>
           </h2>
         </div>
         <div className="p-3 sm:p-6 overflow-y-auto flex-1">
@@ -309,14 +311,14 @@ export default function PortfolioConsole() {
       >
         <div className="p-3 sm:p-4 border-b border-gray-300 dark:border-gray-700">
           <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
-            Skills & Technologies
+            {t('skillsTechnologies')}
           </h2>
         </div>
         <div className="p-3 sm:p-6 overflow-y-auto flex-1">
           <div className="space-y-4">
             <div>
               <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                Cloud & DevOps
+                {t('cloudDevOps')}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {portfolioData.skills.cloud.map((skill, i) => (
@@ -331,7 +333,7 @@ export default function PortfolioConsole() {
             </div>
             <div>
               <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                Frontend
+                {t('frontend')}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {portfolioData.skills.frontend.map((skill, i) => (
@@ -346,7 +348,7 @@ export default function PortfolioConsole() {
             </div>
             <div>
               <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                Backend
+                {t('backend')}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {portfolioData.skills.backend.map((skill, i) => (
@@ -370,7 +372,7 @@ export default function PortfolioConsole() {
       >
         <div className="p-3 sm:p-4 border-b border-gray-300 dark:border-gray-700">
           <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
-            Blog & Articles
+            {t('blog')}
           </h2>
         </div>
         <div className="p-3 sm:p-6 overflow-y-auto flex-1">
@@ -416,7 +418,7 @@ export default function PortfolioConsole() {
       >
         <div className="p-3 sm:p-4 border-b border-gray-300 dark:border-gray-700">
           <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
-            🏆 Key Achievements
+            🏆 {t('achievements')}
           </h2>
         </div>
         <div className="p-3 sm:p-6 overflow-y-auto flex-1">
@@ -469,7 +471,7 @@ export default function PortfolioConsole() {
             {portfolioData.personal.title}
           </p>
           <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 hidden sm:block">
-            {portfolioData.personal.experience} Experience | {portfolioData.experience[0].company}
+            {portfolioData.personal.experience} {t('yearsExperience')} | {portfolioData.experience[0].company}
           </p>
         </div>
         <div className="flex items-center gap-2 flex-wrap">
@@ -484,7 +486,7 @@ export default function PortfolioConsole() {
             title={isDragEnabled ? "Lock layout" : "Unlock layout"}
           >
             {isDragEnabled ? <Unlock size={14} /> : <Lock size={14} />}
-            <span className="hidden md:inline">{isDragEnabled ? "Drag Enabled" : "Drag Disabled"}</span>
+            <span className="hidden md:inline">{isDragEnabled ? t('dragEnabled') : t('dragDisabled')}</span>
           </button>
           <button
             onClick={resetLayout}
@@ -492,7 +494,7 @@ export default function PortfolioConsole() {
             title="Reset widget layout to default"
           >
             <RotateCcw size={14} />
-            <span className="hidden md:inline">Reset</span>
+            <span className="hidden md:inline">{t('reset')}</span>
           </button>
           {/* Social links - visible on all screens */}
           <a
@@ -518,7 +520,7 @@ export default function PortfolioConsole() {
             className="px-3 sm:px-4 py-2 bg-[#ff9900] text-white rounded text-xs sm:text-sm hover:bg-[#cc7a00] flex items-center space-x-2"
           >
             <Mail size={14} />
-            <span>Contact</span>
+            <span>{t('contact')}</span>
           </a>
         </div>
       </div>
@@ -529,16 +531,18 @@ export default function PortfolioConsole() {
           <div className="flex items-start space-x-3">
             <div>
               <h3 className="text-gray-800 dark:text-slate-300 font-semibold mb-1">
-                Customizable Dashboard
+                {t('customizableDashboard')}
               </h3>
               <p className="text-sm text-gray-700 dark:text-slate-400">
-                Hover over any widget to see the drag handle (⋮⋮) on the left.
-                Drag and drop to rearrange sections.
+                {t('dragInstruction')}
               </p>
             </div>
           </div>
         </div>
       )}
+
+      {/* Real-Time Metrics - Commented out until real API integration */}
+      {/* <MetricsWidget /> */}
 
       {/* Draggable Widgets Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
@@ -575,9 +579,10 @@ export default function PortfolioConsole() {
       >
         <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-300 dark:border-gray-700">
           <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
-            🗺️ Career Journey
+            🗺️ {t('careerJourney')}
           </h2>
-
+          <div className="hidden sm:block text-xs px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full">
+          </div>
         </div>
         <div className="p-3 sm:p-6">
           <div className="relative">

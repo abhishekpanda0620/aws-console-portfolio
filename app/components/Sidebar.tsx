@@ -11,24 +11,26 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { portfolioData } from "../data/portfolio";
+import { useLocale } from "../context/LocaleContext";
 
 export default function Sidebar() {
+  const { t, region } = useLocale();
   const [isExpanded, setIsExpanded] = useState(true);
   const [activeSection, setActiveSection] = useState("projects");
 
   const portfolioSections = [
-    { label: "Projects", icon: <Code size={16} />, href: "projects", count: 4 },
+    { label: t('projects'), icon: <Code size={16} />, href: "projects", count: 4 },
     {
-      label: "Certifications",
+      label: t('certifications'),
       icon: <Award size={16} />,
       href: "certifications",
-      count: 4,
+      count: 5,
     },
-    { label: "Experience", icon: <Briefcase size={16} />, href: "experience" },
-    { label: "Skills", icon: <Star size={16} />, href: "skills" },
-    { label: "Blog", icon: <BookOpen size={16} />, href: "blog", count: 3 },
-    { label: "Achievements", icon: <Trophy size={16} />, href: "achievements" },
-    { label: "Career Journey", icon: <MapPin size={16} />, href: "timeline" },
+    { label: t('experience'), icon: <Briefcase size={16} />, href: "experience" },
+    { label: t('skills'), icon: <Star size={16} />, href: "skills" },
+    { label: t('blog'), icon: <BookOpen size={16} />, href: "blog", count: 3 },
+    { label: t('achievements'), icon: <Trophy size={16} />, href: "achievements" },
+    { label: t('careerJourney'), icon: <MapPin size={16} />, href: "timeline" },
   ];
 
   const handleNavClick = (href: string) => {
@@ -119,13 +121,13 @@ export default function Sidebar() {
                 }}
                 className="w-full px-6 py-2 text-left text-gray-400 dark:text-gray-400 text-xs hover:bg-gray-700 dark:hover:bg-[#37475a] hover:text-white transition-colors"
               >
-                ↑ Back to Top
+                ↑ {t('backToTop')}
               </button>
               <a
                 href={`mailto:${portfolioData.personal.email}`}
                 className="block w-full px-6 py-2 text-left text-gray-400 dark:text-gray-400 text-xs hover:bg-gray-700 dark:hover:bg-[#37475a] hover:text-white transition-colors"
               >
-                ✉️ Send Email
+                ✉️ {t('sendEmail')}
               </a>
               <a
                 href={portfolioData.personal.github}
@@ -133,7 +135,7 @@ export default function Sidebar() {
                 rel="noopener noreferrer"
                 className="block w-full px-6 py-2 text-left text-gray-400 dark:text-gray-400 text-xs hover:bg-gray-700 dark:hover:bg-[#37475a] hover:text-white transition-colors"
               >
-                🔗 GitHub Profile
+                🔗 {t('githubProfile')}
               </a>
               <a
                 href={portfolioData.personal.linkedin}
@@ -150,18 +152,18 @@ export default function Sidebar() {
           <div className="p-4 border-t border-gray-700 dark:border-gray-700 mt-auto">
             <div className="space-y-2 text-xs text-gray-400 dark:text-gray-400">
               <div className="flex justify-between">
-                <span>Region:</span>
+                <span>{t('region')}:</span>
                 <span className="text-gray-200 dark:text-gray-200">
-                  {portfolioData.personal.location}
+                  {region.flag} {region.name}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span>Status:</span>
-                <span className="text-green-400">● Online</span>
+                <span>{t('status')}:</span>
+                <span className="text-green-400">● {t('online')}</span>
               </div>
               <div className="flex justify-between">
-                <span>Version:</span>
-                <span className="text-gray-200 dark:text-gray-200">v2.0</span>
+                <span>{t('version')}:</span>
+                <span className="text-gray-200 dark:text-gray-200">v3.0</span>
               </div>
             </div>
           </div>
