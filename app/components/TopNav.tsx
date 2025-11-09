@@ -266,7 +266,7 @@ export default function TopNav() {
 
         {/* Region Selector - Hidden on mobile */}
         <button className="hidden md:flex text-white text-xs sm:text-sm hover:bg-gray-700 dark:hover:bg-[#37475a] px-2 sm:px-3 py-1.5 rounded items-center space-x-1">
-          <span>India (ap-south-1)</span>
+          <span>{portfolioData.personal.location}</span>
           <ChevronDown size={12} className="sm:w-[14px] sm:h-[14px]" />
         </button>
 

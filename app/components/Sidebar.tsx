@@ -11,6 +11,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { useState } from "react";
+import { portfolioData } from "../data/portfolio";
 
 export default function Sidebar() {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -122,13 +123,13 @@ export default function Sidebar() {
                 ↑ Back to Top
               </button>
               <a
-                href="mailto:abhishekpanda1999@gmail.com"
+                href={`mailto:${portfolioData.personal.email}`}
                 className="block w-full px-6 py-2 text-left text-gray-400 dark:text-gray-400 text-xs hover:bg-gray-700 dark:hover:bg-[#37475a] hover:text-white transition-colors"
               >
                 ✉️ Send Email
               </a>
               <a
-                href="https://github.com/abhishekpanda1999"
+                href={portfolioData.personal.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full px-6 py-2 text-left text-gray-400 dark:text-gray-400 text-xs hover:bg-gray-700 dark:hover:bg-[#37475a] hover:text-white transition-colors"
@@ -136,7 +137,7 @@ export default function Sidebar() {
                 🔗 GitHub Profile
               </a>
               <a
-                href="https://www.linkedin.com/in/abhishek-panda1999/"
+                href={portfolioData.personal.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full px-6 py-2 text-left text-gray-400 dark:text-gray-400 text-xs hover:bg-gray-700 dark:hover:bg-[#37475a] hover:text-white transition-colors"
@@ -152,7 +153,7 @@ export default function Sidebar() {
               <div className="flex justify-between">
                 <span>Region:</span>
                 <span className="text-gray-200 dark:text-gray-200">
-                  ap-south-1
+                  {portfolioData.personal.location}
                 </span>
               </div>
               <div className="flex justify-between">
