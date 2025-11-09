@@ -1,34 +1,53 @@
-'use client';
-import { Star, Home, Grid3x3, Code, Award, Briefcase, BookOpen, Trophy, MapPin } from 'lucide-react';
-import { useState } from 'react';
+"use client";
+import {
+  Star,
+  Home,
+  Grid3x3,
+  Code,
+  Award,
+  Briefcase,
+  BookOpen,
+  Trophy,
+  MapPin,
+} from "lucide-react";
+import { useState } from "react";
 
 export default function Sidebar() {
   const [isExpanded, setIsExpanded] = useState(true);
-  const [activeSection, setActiveSection] = useState('projects');
+  const [activeSection, setActiveSection] = useState("projects");
 
   const portfolioSections = [
-    { label: 'Projects', icon: <Code size={16} />, href: 'projects', count: 4 },
-    { label: 'Certifications', icon: <Award size={16} />, href: 'certifications', count: 3 },
-    { label: 'Experience', icon: <Briefcase size={16} />, href: 'experience' },
-    { label: 'Skills', icon: <Star size={16} />, href: 'skills' },
-    { label: 'Blog', icon: <BookOpen size={16} />, href: 'blog', count: 3 },
-    { label: 'Achievements', icon: <Trophy size={16} />, href: 'achievements' },
-    { label: 'Career Journey', icon: <MapPin size={16} />, href: 'timeline' }
+    { label: "Projects", icon: <Code size={16} />, href: "projects", count: 4 },
+    {
+      label: "Certifications",
+      icon: <Award size={16} />,
+      href: "certifications",
+      count: 3,
+    },
+    { label: "Experience", icon: <Briefcase size={16} />, href: "experience" },
+    { label: "Skills", icon: <Star size={16} />, href: "skills" },
+    { label: "Blog", icon: <BookOpen size={16} />, href: "blog", count: 3 },
+    { label: "Achievements", icon: <Trophy size={16} />, href: "achievements" },
+    { label: "Career Journey", icon: <MapPin size={16} />, href: "timeline" },
   ];
 
   const handleNavClick = (href: string) => {
     setActiveSection(href);
     const element = document.getElementById(href);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
   return (
-    <aside className={`${isExpanded ? 'w-64' : 'w-16'} bg-gray-800 dark:bg-[#232f3e] border-r border-gray-700 dark:border-gray-700 transition-all duration-300 flex flex-col h-full`}>
+    <aside
+      className={`${
+        isExpanded ? "w-64" : "w-16"
+      } bg-gray-800 dark:bg-[#232f3e] border-r border-gray-700 dark:border-gray-700 transition-all duration-300 flex flex-col h-full`}
+    >
       {/* Toggle Button */}
       <div className="p-3 border-b border-gray-700 dark:border-gray-700">
-        <button 
+        <button
           onClick={() => setIsExpanded(!isExpanded)}
           className="w-full flex items-center justify-center p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white"
           title={isExpanded ? "Collapse sidebar" : "Expand sidebar"}
@@ -50,11 +69,19 @@ export default function Sidebar() {
                   key={index}
                   onClick={() => handleNavClick(section.href)}
                   className={`w-full px-6 py-2.5 text-left text-gray-300 dark:text-gray-300 text-sm hover:bg-gray-700 dark:hover:bg-[#37475a] hover:text-white flex items-center justify-between group transition-colors ${
-                    activeSection === section.href ? 'bg-gray-700 dark:bg-[#37475a] border-l-4 border-[#ff9900]' : ''
+                    activeSection === section.href
+                      ? "bg-gray-700 dark:bg-[#37475a] border-l-4 border-[#ff9900]"
+                      : ""
                   }`}
                 >
                   <div className="flex items-center space-x-3">
-                    <span className={`${activeSection === section.href ? 'text-[#ff9900]' : 'text-gray-400 dark:text-gray-400'} group-hover:text-[#ff9900]`}>
+                    <span
+                      className={`${
+                        activeSection === section.href
+                          ? "text-[#ff9900]"
+                          : "text-gray-400 dark:text-gray-400"
+                      } group-hover:text-[#ff9900]`}
+                    >
                       {section.icon}
                     </span>
                     <span>{section.label}</span>
@@ -76,7 +103,12 @@ export default function Sidebar() {
             </div>
             <div className="bg-gray-900 dark:bg-[#1a2332]">
               <button
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                onClick={() => {
+                  const mainElement = document.querySelector('main');
+                  if (mainElement) {
+                    mainElement.scrollTo({ top: 0, behavior: "smooth" });
+                  }
+                }}
                 className="w-full px-6 py-2 text-left text-gray-400 dark:text-gray-400 text-xs hover:bg-gray-700 dark:hover:bg-[#37475a] hover:text-white transition-colors"
               >
                 ↑ Back to Top
@@ -111,7 +143,9 @@ export default function Sidebar() {
             <div className="space-y-2 text-xs text-gray-400 dark:text-gray-400">
               <div className="flex justify-between">
                 <span>Region:</span>
-                <span className="text-gray-200 dark:text-gray-200">ap-south-1</span>
+                <span className="text-gray-200 dark:text-gray-200">
+                  ap-south-1
+                </span>
               </div>
               <div className="flex justify-between">
                 <span>Status:</span>
@@ -128,30 +162,30 @@ export default function Sidebar() {
 
       {!isExpanded && (
         <div className="flex-1 flex flex-col items-center py-4 space-y-4">
-          <button 
-            onClick={() => handleNavClick('projects')}
-            className="p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white" 
+          <button
+            onClick={() => handleNavClick("projects")}
+            className="p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white"
             title="Projects"
           >
             <Code size={20} />
           </button>
-          <button 
-            onClick={() => handleNavClick('certifications')}
-            className="p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white" 
+          <button
+            onClick={() => handleNavClick("certifications")}
+            className="p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white"
             title="Certifications"
           >
             <Award size={20} />
           </button>
-          <button 
-            onClick={() => handleNavClick('experience')}
-            className="p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white" 
+          <button
+            onClick={() => handleNavClick("experience")}
+            className="p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white"
             title="Experience"
           >
             <Briefcase size={20} />
           </button>
-          <button 
-            onClick={() => handleNavClick('skills')}
-            className="p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white" 
+          <button
+            onClick={() => handleNavClick("skills")}
+            className="p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white"
             title="Skills"
           >
             <Star size={20} />

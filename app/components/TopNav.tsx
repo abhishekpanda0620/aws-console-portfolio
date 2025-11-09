@@ -137,7 +137,6 @@ export default function TopNav() {
     return (
       <header className="w-full bg-gray-800 dark:bg-[#232f3e] h-12 flex items-center justify-between border-b border-gray-700 px-4">
         <div className="flex items-center space-x-4">
-          <div className="text-white font-bold text-sm">aws</div>
           <div className="text-white text-sm">Loading...</div>
         </div>
       </header>
@@ -145,19 +144,19 @@ export default function TopNav() {
   }
 
   return (
-    <header className="w-full bg-gray-800 dark:bg-[#232f3e] h-12 flex items-center justify-between border-b border-gray-700 px-4">
+    <header className="w-full bg-gray-800 py-1 dark:bg-aws-blue h-12 flex items-center justify-between border-b border-gray-700 px-4">
       {/* Left Section */}
       <div className="flex items-center space-x-4">
         {/* AWS Logo */}
-        <div className="flex items-center space-x-2">
+        {/* <div className="flex items-center space-x-2">
           <div className="text-white font-bold text-sm">aws</div>
-        </div>
+        </div> */}
 
         {/* Services Menu */}
-        <button className="text-white text-sm hover:bg-gray-700 dark:hover:bg-[#37475a] px-3 py-1.5 rounded flex items-center space-x-1">
+        {/* <button className="text-white text-sm hover:bg-gray-700 dark:hover:bg-[#37475a] px-3 py-1.5 rounded flex items-center space-x-1">
           <span>Portfolio</span>
           <ChevronDown size={14} />
-        </button>
+        </button> */}
 
         {/* Search Bar */}
         <div className="relative" ref={searchRef}>

@@ -115,7 +115,7 @@ export const portfolioData = {
     {
       name: "AWS Certified Solutions Architect – Associate",
       issuer: "Amazon Web Services",
-      date: "2023",
+      date: "2024",
       credentialId: "AWS-SAA-2023",
       icon: "FaAws",
     },
@@ -125,6 +125,20 @@ export const portfolioData = {
       date: "2025",
       credentialId: "GCP-PCA-2025",
       icon: "SiGooglecloud",
+    },
+        {
+      name: "Google Cloud Professional Cloud Architect",
+      issuer: "Google Cloud",
+      date: "2025",
+      credentialId: "GCP-PCA-2025",
+      icon: "SiGooglecloud",
+    },
+        {
+      name: "Microsoft Certified: Azure Fundamentals",
+      issuer: "Microsoft",
+      date: "2025",
+      credentialId: "AZ-900",
+      icon: "SiMicrosoftazure",
     }
     
   ],
