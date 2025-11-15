@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # AWS Console Portfolio - Deployment Script
-# Version: v3.1.0
+# Version: v4.0.2
 
 set -e  # Exit on error
 

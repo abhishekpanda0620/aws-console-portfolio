@@ -1,6 +1,6 @@
 # .htaccess for AWS Console Portfolio
 # For Apache/Shared Hosting Deployment
-# Version: v3.1.0
+# Version: v4.0.2
 
 # Enable Rewrite Engine
 <IfModule mod_rewrite.c>

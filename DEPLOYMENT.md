@@ -1,4 +1,4 @@
-# Deployment Guide - AWS Console Portfolio v3.1.0
+# Deployment Guide - AWS Console Portfolio v4.0.2
 
 This guide covers deploying your Next.js portfolio as a static site to Nginx or shared hosting.
 
@@ -217,5 +217,5 @@ For issues or questions:
 
 ---
 
-**Version:** v3.1.0  
+**Version:** v4.0.2  
 **Last Updated:** 2025-01-09
