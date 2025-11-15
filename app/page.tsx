@@ -578,8 +578,7 @@ export default function PortfolioConsole() {
           <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
             🗺️ {t('careerJourney')}
           </h2>
-          <div className="hidden sm:block text-xs px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full">
-          </div>
+
         </div>
         <div className="p-3 sm:p-6">
           <div className="relative">
