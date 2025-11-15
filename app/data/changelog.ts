@@ -10,6 +10,51 @@ export type ChangelogEntry = {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: '4.0.1',
+    date: '2025-11-15',
+    type: 'patch',
+    changes: [
+      {
+        category: 'Fixed',
+        items: [
+          'Resolved ESLint issues in Terminal component',
+          'Improved TypeScript type safety with proper type assertions',
+          'Fixed React Hook dependencies',
+          'Properly escaped special characters in JSX',
+          'Removed unused variables and imports',
+        ],
+      },
+    ],
+  },
+  {
+    version: '4.0.0',
+    date: '2025-11-15',
+    type: 'major',
+    changes: [
+      {
+        category: 'Added',
+        items: [
+          'AWS CloudShell-inspired Terminal with command-line interface',
+          'Interactive terminal commands for navigating portfolio sections',
+          'Command history navigation with up/down arrows',
+          'Terminal commands: help, clear, goto, list, region, contact, about, version, exit',
+          'Responsive terminal design with maximize/minimize controls',
+          'Mobile-optimized terminal access through dropdown menu',
+          'Dynamic section highlighting when navigating via terminal commands',
+          'JSON data viewing capabilities through terminal list commands',
+        ],
+      },
+      {
+        category: 'Changed',
+        items: [
+          'Improved mobile navigation with optimized dropdown menu',
+          'Enhanced search bar width for better mobile experience',
+          'Terminal opens in maximized mode by default for better usability',
+        ],
+      },
+    ],
+  },
+  {
     version: '3.1.0',
     date: '2025-01-09',
     type: 'minor',
@@ -118,6 +163,11 @@ export const changelog: ChangelogEntry[] = [
 ];
 
 export const upcomingFeatures = [
+  {
+    title: 'Terminal Command Extensions',
+    description: 'Add more interactive commands and features to the terminal interface',
+    status: 'planned' as const,
+  },
   {
     title: 'Real-Time Metrics Integration',
     description: 'Connect to GitHub API, Google Analytics, and blog platforms for live statistics',

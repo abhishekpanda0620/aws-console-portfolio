@@ -2,6 +2,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { Terminal as TerminalIcon, X } from 'lucide-react';
 import { useLocale } from "../context/LocaleContext";
+import { portfolioData } from "../data/portfolio";
+import { regions } from "../context/LocaleContext";
+import { changelog } from "../data/changelog";
 
 interface TerminalProps {
   isOpen: boolean;
@@ -17,7 +20,7 @@ interface CommandOutput {
 }
 
 export default function Terminal({ isOpen, onClose }: TerminalProps) {
-  const { t, region, setRegion } = useLocale();
+  const { region, setRegion } = useLocale();
   const [terminalSize, setTerminalSize] = useState<TerminalSize>('maximized');
   const [input, setInput] = useState('');
   const [cursorPosition, setCursorPosition] = useState(0);
@@ -154,6 +157,7 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('paste', handlePaste);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, input, cursorPosition, historyIndex, inputHistory, onClose]);
 
   // Handle terminal clicks to position cursor
@@ -209,7 +213,15 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
       setCommandHistory([]);
       return;
     } else if (commandLower === 'version') {
-      output = <div>AWS Console Portfolio Terminal v3.1.0</div>;
+      // Get the latest version from the changelog
+      const latestVersion = changelog[0].version;
+      
+      output = (
+        <div>
+          <div>AWS Console Portfolio Terminal v{latestVersion}</div>
+          <div className="text-xs text-gray-400 mt-1">Open Source Project - https://github.com/abhishekpanda0620/aws-console-portfolio</div>
+        </div>
+      );
     } else if (commandLower === 'exit') {
       output = <div>Closing terminal...</div>;
       setTimeout(() => onClose(), 500);
@@ -264,9 +276,9 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
       const validSections = ['projects', 'certifications', 'experience', 'skills', 'blog', 'achievements', 'education'];
       
       if (validSections.includes(section)) {
-        // Get data from portfolioData based on section
-        const { portfolioData } = require('../data/portfolio');
-        const sectionData = portfolioData[section];
+        // Get data from portfolioData
+        // Type assertion to avoid TypeScript error
+        const sectionData = portfolioData[section as keyof typeof portfolioData];
         
         if (sectionData) {
           output = (
@@ -296,8 +308,7 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
       
       if (validRegions.includes(newRegion)) {
         // Find the region in the regions array
-        const { regions } = require('../context/LocaleContext');
-        const regionObj = regions.find((r: any) => r.code === newRegion);
+        const regionObj = regions.find((r) => r.code === newRegion);
         
         if (regionObj) {
           setRegion(regionObj);
@@ -314,7 +325,6 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
       }
     } else if (commandLower === 'contact') {
       // Get contact information from portfolioData
-      const { portfolioData } = require('../data/portfolio');
       const { email, linkedin, github } = portfolioData.personal;
       
       output = (
@@ -326,11 +336,15 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
         </div>
       );
     } else if (commandLower === 'about') {
+      // Get personal information from portfolioData
+      const { name } = portfolioData.personal;
+      
       output = (
         <div>
           <div className="text-yellow-400 font-semibold mb-1">About This Portfolio:</div>
-          <div>This is an AWS Console-inspired portfolio showcasing Abhishek's work, skills, and experience.</div>
+          <div>This is an AWS Console-inspired portfolio showcasing {name}&apos;s work, skills, and experience.</div>
           <div className="mt-1">Built with Next.js, React, and TailwindCSS.</div>
+          <div className="mt-1">This is an open-source project. Feel free to fork and customize it for your own portfolio.</div>
         </div>
       );
     } else {

@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: 'Abhishek Panda — Portfolio',
-  description: 'Portfolio presented in an AWS Console style'
+  title: 'AWS Console Portfolio',
+  description: 'Portfolio presented in an AWS Console style with interactive terminal'
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

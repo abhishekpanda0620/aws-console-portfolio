@@ -1,7 +1,21 @@
 {
-  "name": "abhishek-portfolio-console",
-  "version": "1.0.0",
-  "private": true,
+  "name": "aws-console-portfolio",
+  "version": "4.0.1",
+  "private": false,
+  "description": "AWS Console-inspired portfolio website with interactive terminal",
+  "author": "Abhishek Panda <abhishekpanda0620@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abhishekpanda0620/aws-console-portfolio"
+  },
+  "keywords": [
+    "portfolio",
+    "aws-console",
+    "terminal",
+    "nextjs",
+    "react"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
