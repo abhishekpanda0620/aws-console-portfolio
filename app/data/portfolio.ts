@@ -46,6 +46,7 @@ export const portfolioData = {
         "Scalable Kubernetes deployment",
         "Secure network architecture",
       ],
+      live:"",
       status: "Production",
     },
     {
@@ -67,6 +68,7 @@ export const portfolioData = {
         "Automated recommendations for optimization",
         "Interactive visualization of cloud spending",
       ],
+      live:"",
       status: "Production",
     },
     {
@@ -88,6 +90,7 @@ export const portfolioData = {
         "Resource utilization insights",
         "Budget alerts and forecasting",
       ],
+      live:"",
       status: "Active Development",
     },
     {
@@ -109,6 +112,7 @@ export const portfolioData = {
         "Custom short URL creation",
         "API for integration with other services",
       ],
+      live:"",
       status: "Production",
     },
 
@@ -131,6 +135,7 @@ export const portfolioData = {
         "Continuous integration and deployment with Jenkins",
         "Infrastructure as Code best practices",
       ],
+      live:"",
       status: "Production",
     },
     {
@@ -152,6 +157,7 @@ export const portfolioData = {
         "Laboratory workflow optimization",
         "Responsive design for multiple devices",
       ],
+      live:"",
       status: "Production",
     },
     {
@@ -173,6 +179,7 @@ export const portfolioData = {
         "High availability configuration",
         "Helm charts for easy deployment",
       ],
+      live:"",
       status: "Production",
     },
     {
@@ -194,6 +201,7 @@ export const portfolioData = {
         "Rollback capabilities",
         "Deployment to multiple cloud providers",
       ],
+      live:"",
       status: "Production",
     },
   ],
