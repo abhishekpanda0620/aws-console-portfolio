@@ -1,6 +1,6 @@
 {
   "name": "aws-console-portfolio",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "private": false,
   "description": "AWS Console-inspired portfolio website with interactive terminal",
   "author": "Abhishek Panda <abhishekpanda0620@gmail.com>",

@@ -21,7 +21,9 @@ interface CommandOutput {
 
 export default function Terminal({ isOpen, onClose }: TerminalProps) {
   const { region, setRegion } = useLocale();
-  const [terminalSize, setTerminalSize] = useState<TerminalSize>('maximized');
+  const [isMobile, setIsMobile] = useState(false);
+  const [terminalSize, setTerminalSize] = useState<TerminalSize>('normal');
+  const [previousIsOpen, setPreviousIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [cursorPosition, setCursorPosition] = useState(0);
   const [showCursor, setShowCursor] = useState(true);
@@ -39,6 +41,43 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
   const [inputHistory, setInputHistory] = useState<string[]>([]);
   const terminalRef = useRef<HTMLDivElement>(null);
   const terminalContainerRef = useRef<HTMLDivElement>(null);
+
+  // Clear terminal when opened
+  useEffect(() => {
+    // Check if terminal was just opened
+    if (isOpen && !previousIsOpen) {
+      // Reset command history to initial state
+      setCommandHistory([{
+        command: '',
+        output: (
+          <div>
+            <div className="text-gray-300 mb-2">Type <span className="text-yellow-400">help</span> to see available commands</div>
+          </div>
+        ),
+      }]);
+    }
+    
+    // Update previous state
+    setPreviousIsOpen(isOpen);
+  }, [isOpen]);
+
+  // Check if device is mobile
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768); // 768px is standard breakpoint for tablets
+      // Set initial terminal size based on device type
+      setTerminalSize(window.innerWidth < 768 ? 'maximized' : 'normal');
+    };
+    
+    // Check on initial load
+    checkIfMobile();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkIfMobile);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
 
   // Scroll to bottom when command history changes
   useEffect(() => {
@@ -435,8 +474,8 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
                 ref={terminalRef}
                 className="flex-1 p-3 overflow-y-auto font-mono text-sm text-gray-300 bg-[#0a1929]"
                 style={{
-                  height: terminalSize === 'maximized' ? 'calc(100vh - 57px)' : '250px', // Account for top nav (12px) + terminal header (45px)
-                  maxHeight: terminalSize === 'maximized' ? 'calc(100vh - 57px)' : '250px'
+                  height: terminalSize === 'maximized' ? 'calc(100vh - 57px)' : 'calc(30vh)', // 30% of viewport height for normal mode
+                  maxHeight: terminalSize === 'maximized' ? 'calc(100vh - 57px)' : 'calc(30vh)'
                 }}
               >
                 {/* Command History */}

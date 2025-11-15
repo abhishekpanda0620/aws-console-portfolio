@@ -10,6 +10,21 @@ export type ChangelogEntry = {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: '4.0.2',
+    date: '2025-11-15',
+    type: 'patch',
+    changes: [
+      {
+        category: 'Changed',
+        items: [
+          'Improved terminal height behavior: 30% height on desktop/laptop, full height on mobile/tablet',
+          'Added responsive resizing for terminal based on device type',
+          'Added automatic clear screen functionality when terminal is opened',
+        ],
+      },
+    ],
+  },
+  {
     version: '4.0.1',
     date: '2025-11-15',
     type: 'patch',
