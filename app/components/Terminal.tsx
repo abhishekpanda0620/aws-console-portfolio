@@ -464,9 +464,7 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
                       <span className={`inline-block w-2 h-5 -mb-0.5 bg-white ${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity duration-100`}></span>
                       {input.slice(cursorPosition)}
                     </span>
-                    {input.length === 0 && !showCursor && (
-                      <span className="absolute left-0 top-0 text-gray-500">Type a command...</span>
-                    )}
+
                   </div>
                 </div>
               </div>
