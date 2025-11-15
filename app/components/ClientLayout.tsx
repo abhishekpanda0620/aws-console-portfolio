@@ -2,14 +2,16 @@
 import { ReactNode, useState } from 'react';
 import TopNav from './TopNav';
 import Sidebar from './Sidebar';
+import Terminal from './Terminal';
 import { Menu, X } from 'lucide-react';
 
 export default function ClientLayout({ children }: { children: ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false);
 
   return (
     <div className="flex flex-col h-screen bg-white dark:bg-[#0d1117]">
-      <TopNav />
+      <TopNav onOpenTerminal={() => setIsTerminalOpen(true)} />
       <div className="flex flex-1 overflow-hidden relative">
         {/* Mobile Menu Button */}
         <button
@@ -45,6 +47,12 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
           {children}
         </main>
       </div>
+      
+      {/* Terminal Component */}
+      <Terminal
+        isOpen={isTerminalOpen}
+        onClose={() => setIsTerminalOpen(false)}
+      />
     </div>
   );
 }

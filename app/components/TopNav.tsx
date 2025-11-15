@@ -10,11 +10,14 @@ import {
   Monitor,
   X,
   Globe,
+  Terminal,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { portfolioData } from "../data/portfolio";
 import { useLocale, regions } from "../context/LocaleContext";
 import Link from "next/link";
+import { TbBrandPowershell } from "react-icons/tb";
+
 
 // Simple theme hook
 function useSimpleTheme() {
@@ -74,11 +77,12 @@ function useSimpleTheme() {
   return { theme, setTheme, mounted };
 }
 
-export default function TopNav() {
+export default function TopNav({ onOpenTerminal }: { onOpenTerminal?: () => void }) {
   const { theme, setTheme, mounted } = useSimpleTheme();
   const { region, setRegion, t } = useLocale();
   const [showThemeMenu, setShowThemeMenu] = useState(false);
   const [showRegionMenu, setShowRegionMenu] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<
     Array<{
@@ -91,6 +95,7 @@ export default function TopNav() {
   const menuRef = useRef<HTMLDivElement>(null);
   const regionMenuRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!mounted) return;
@@ -110,6 +115,12 @@ export default function TopNav() {
         !searchRef.current.contains(event.target as Node)
       ) {
         setShowSearchResults(false);
+      }
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target as Node)
+      ) {
+        setShowMobileMenu(false);
       }
     }
 
@@ -205,7 +216,7 @@ export default function TopNav() {
       {/* Left Section */}
       <div className="flex items-center space-x-2 sm:space-x-4 flex-1">
         {/* Search Bar */}
-        <div className="relative flex-1 max-w-md" ref={searchRef}>
+        <div className="relative flex-1 max-w-[200px] sm:max-w-md" ref={searchRef}>
           <div className="absolute left-2 sm:left-3 top-2 sm:top-2.5 text-gray-400">
             <Search size={14} className="sm:w-4 sm:h-4" />
           </div>
@@ -262,9 +273,19 @@ export default function TopNav() {
 
       {/* Right Section */}
       <div className="flex items-center space-x-1 sm:space-x-2">
+        {/* Terminal Button - AWS CloudShell style (hidden on mobile) */}
+        {onOpenTerminal && (
+          <button
+            onClick={onOpenTerminal}
+            className="hidden sm:flex items-center p-1.5 sm:p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white"
+            title="Open CloudShell"
+          >
+            <TbBrandPowershell size={16} className="sm:w-[18px] sm:h-[18px] mr-1" />
+          </button>
+        )}
         {/* Support Icon - Hidden on mobile */}
         <a
-          href="https://github.com/abhishekpanda1999"
+          href={portfolioData.personal.github}
           target="_blank"
           rel="noopener noreferrer"
           className="hidden sm:block p-2 hover:bg-gray-700 dark:hover:bg-[#37475a] rounded text-white"
@@ -405,14 +426,76 @@ export default function TopNav() {
           )}
         </div>
 
-        {/* User Account - Simplified on mobile */}
-        <button className="text-white text-xs sm:text-sm hover:bg-gray-700 dark:hover:bg-[#37475a] px-2 sm:px-3 py-1.5 rounded flex items-center space-x-1">
-          <span className="hidden sm:inline">
-            {portfolioData.personal.name}
-          </span>
-          <span className="sm:hidden">AP</span>
-          <ChevronDown size={12} className="sm:w-[14px] sm:h-[14px]" />
-        </button>
+        {/* User Account with Mobile Menu */}
+        <div className="relative" ref={mobileMenuRef}>
+          <button
+            onClick={() => setShowMobileMenu(!showMobileMenu)}
+            className="text-white text-xs sm:text-sm hover:bg-gray-700 dark:hover:bg-[#37475a] px-2 sm:px-3 py-1.5 rounded flex items-center space-x-1"
+          >
+            <span className="hidden sm:inline">
+              {portfolioData.personal.name}
+            </span>
+            <span className="sm:hidden">AP</span>
+            <ChevronDown size={12} className="sm:w-[14px] sm:h-[14px]" />
+          </button>
+
+          {/* Mobile Menu Dropdown */}
+          {showMobileMenu && (
+            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded shadow-lg z-50">
+              <div className="py-1">
+                {/* Mobile Terminal Option */}
+                {onOpenTerminal && (
+                  <button
+                    onClick={() => {
+                      onOpenTerminal();
+                      setShowMobileMenu(false);
+                    }}
+                    className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center space-x-2"
+                  >
+                    <Terminal size={16} className="text-gray-900 dark:text-white" />
+                    <span className="text-gray-900 dark:text-white">CloudShell</span>
+                  </button>
+                )}
+                
+                {/* Mobile Region Selector */}
+                <div className="md:hidden border-t border-gray-200 dark:border-gray-700">
+                  <div className="px-4 py-2 text-xs text-gray-500 dark:text-gray-400">
+                    Region
+                  </div>
+                  {regions.map((r) => (
+                    <button
+                      key={r.code}
+                      onClick={() => {
+                        setRegion(r);
+                        setShowMobileMenu(false);
+                      }}
+                      className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-between"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <span className="text-lg">{r.flag}</span>
+                        <span className="text-gray-900 dark:text-white">{r.name}</span>
+                      </div>
+                      {region.code === r.code && (
+                        <span className="text-[#ff9900]">✓</span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+                
+                {/* GitHub Link */}
+                <a
+                  href="https://github.com/abhishekpanda1999"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="sm:hidden w-full px-4 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center space-x-2 border-t border-gray-200 dark:border-gray-700"
+                >
+                  <HelpCircle size={16} className="text-gray-900 dark:text-white" />
+                  <span className="text-gray-900 dark:text-white">GitHub</span>
+                </a>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );
