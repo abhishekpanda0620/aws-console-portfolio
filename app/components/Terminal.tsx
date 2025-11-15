@@ -21,6 +21,7 @@ interface CommandOutput {
 
 export default function Terminal({ isOpen, onClose }: TerminalProps) {
   const { region, setRegion } = useLocale();
+  // isMobile state is used to set initial terminal size based on device type
   const [isMobile, setIsMobile] = useState(false);
   const [terminalSize, setTerminalSize] = useState<TerminalSize>('normal');
   const [previousIsOpen, setPreviousIsOpen] = useState(false);
@@ -59,7 +60,7 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
     
     // Update previous state
     setPreviousIsOpen(isOpen);
-  }, [isOpen]);
+  }, [isOpen, previousIsOpen]);
 
   // Check if device is mobile
   useEffect(() => {

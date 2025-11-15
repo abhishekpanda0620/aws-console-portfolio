@@ -9,14 +9,32 @@ import {
   Trophy,
   MapPin,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { portfolioData } from "../data/portfolio";
 import { useLocale } from "../context/LocaleContext";
+import { changelog } from "../data/changelog";
 
 export default function Sidebar() {
   const { t, region } = useLocale();
   const [isExpanded, setIsExpanded] = useState(true);
   const [activeSection, setActiveSection] = useState("projects");
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Check if device is mobile
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 1024); // 1024px matches lg breakpoint in Tailwind
+    };
+    
+    // Check on initial load
+    checkIfMobile();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkIfMobile);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
 
   const portfolioSections = [
     { label: t('projects'), icon: <Code size={16} />, href: "projects", count: 4 },
@@ -46,6 +64,15 @@ export default function Sidebar() {
       setTimeout(() => {
         element.classList.remove('ring-2', 'ring-[#ff9900]', 'ring-opacity-50');
       }, 2000);
+      
+      // Close sidebar on mobile when navigating to a section
+      if (isMobile) {
+        // Find the toggle button in ClientLayout and trigger a click
+        const sidebarToggleButton = document.querySelector('.lg\\:hidden.fixed.bottom-4.right-4');
+        if (sidebarToggleButton && window.getComputedStyle(sidebarToggleButton).display !== 'none') {
+          (sidebarToggleButton as HTMLElement).click();
+        }
+      }
     }
   };
 
@@ -163,7 +190,7 @@ export default function Sidebar() {
               </div>
               <div className="flex justify-between">
                 <span>{t('version')}:</span>
-                <span className="text-gray-200 dark:text-gray-200">v4.0.2</span>
+                <span className="text-gray-200 dark:text-gray-200">v{changelog[0].version}</span>
               </div>
             </div>
           </div>
