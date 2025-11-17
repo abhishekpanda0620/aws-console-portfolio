@@ -42,6 +42,7 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
   const [inputHistory, setInputHistory] = useState<string[]>([]);
   const terminalRef = useRef<HTMLDivElement>(null);
   const terminalContainerRef = useRef<HTMLDivElement>(null);
+  const hiddenInputRef = useRef<HTMLInputElement>(null);
 
   // Clear terminal when opened
   useEffect(() => {
@@ -109,8 +110,14 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
         return;
       }
 
-      // Don't capture if typing in another input field
-      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+      // Only capture from our hidden input or from document when not on mobile
+      if (e.target !== hiddenInputRef.current && isMobile) {
+        return;
+      }
+
+      // Don't capture if typing in another input field (except our hidden input)
+      if ((e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement)
+          && e.target !== hiddenInputRef.current) {
         return;
       }
 
@@ -119,7 +126,10 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
         return;
       }
 
-      e.preventDefault(); // Prevent default browser behavior
+      // No need to prevent default for our hidden input
+      if (e.target !== hiddenInputRef.current) {
+        e.preventDefault(); // Prevent default browser behavior
+      }
 
       if (e.key === 'Enter') {
         if (input.trim()) {
@@ -207,6 +217,11 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
     const handleTerminalClick = () => {
       // When clicking anywhere in terminal, move cursor to end of input
       setCursorPosition(input.length);
+      
+      // Focus the hidden input to trigger mobile keyboard
+      if (hiddenInputRef.current) {
+        hiddenInputRef.current.focus();
+      }
     };
 
     const terminalContainer = terminalContainerRef.current;
@@ -220,6 +235,46 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
       }
     };
   }, [isOpen, input.length]);
+
+  // Handle input from the hidden input field (for mobile)
+  useEffect(() => {
+    if (!isOpen || !isMobile) return;
+    
+    const handleInput = (e: Event) => {
+      const inputEvent = e as InputEvent;
+      const inputElement = e.target as HTMLInputElement;
+      
+      if (inputEvent.inputType === 'insertText' && inputEvent.data) {
+        // Add the character at cursor position
+        const newInput = input.slice(0, cursorPosition) + inputEvent.data + input.slice(cursorPosition);
+        setInput(newInput);
+        setCursorPosition(prev => prev + 1);
+      } else if (inputEvent.inputType === 'deleteContentBackward') {
+        // Handle backspace
+        if (cursorPosition > 0) {
+          const newInput = input.slice(0, cursorPosition - 1) + input.slice(cursorPosition);
+          setInput(newInput);
+          setCursorPosition(prev => prev - 1);
+        }
+      }
+      
+      // Clear the hidden input value to prepare for next input
+      inputElement.value = '';
+    };
+    
+    const hiddenInput = hiddenInputRef.current;
+    if (hiddenInput) {
+      hiddenInput.addEventListener('input', handleInput);
+      // Focus the input when terminal is opened on mobile
+      hiddenInput.focus();
+    }
+    
+    return () => {
+      if (hiddenInput) {
+        hiddenInput.removeEventListener('input', handleInput);
+      }
+    };
+  }, [isOpen, isMobile, input, cursorPosition]);
 
 
   const processCommand = (command: string) => {
@@ -507,6 +562,18 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
 
                   </div>
                 </div>
+                
+                {/* Hidden input field to capture mobile keyboard input */}
+                <input
+                  ref={hiddenInputRef}
+                  type="text"
+                  className={`opacity-0 absolute ${isMobile ? '' : 'h-0 w-0'} pointer-events-none`}
+                  autoCapitalize="none"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  spellCheck="false"
+                  aria-hidden={!isMobile}
+                />
               </div>
             )}
           </div>
