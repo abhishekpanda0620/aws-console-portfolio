@@ -14,9 +14,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+import { portfolioData } from './data/portfolio';
+
 export const metadata = {
-  title: 'AWS Console Portfolio',
-  description: 'Portfolio presented in an AWS Console style with interactive terminal'
+  title: portfolioData?.personal?.name 
+    ? `${portfolioData.personal.name} | ${portfolioData.personal.title}`
+    : 'AWS Console Portfolio',
+  description: portfolioData?.personal?.bio || 'Portfolio presented in an AWS Console style with interactive terminal',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
