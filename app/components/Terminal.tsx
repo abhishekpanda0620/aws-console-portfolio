@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { Terminal as TerminalIcon, X } from 'lucide-react';
 import { useLocale } from "../context/LocaleContext";
 import { portfolioData } from "../data/portfolio";
@@ -236,104 +236,8 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
     };
   }, [isOpen, input.length]);
 
-  // Handle input from the hidden input field (for mobile)
-  useEffect(() => {
-    if (!isOpen || !isMobile) return;
-    
-    const handleInput = (e: Event) => {
-      const inputEvent = e as InputEvent;
-      const inputElement = e.target as HTMLInputElement;
-      
-      // Handle different input types from mobile keyboard
-      switch (inputEvent.inputType) {
-        case 'insertText':
-          if (inputEvent.data) {
-            // Add the character at cursor position
-            const newInput = input.slice(0, cursorPosition) + inputEvent.data + input.slice(cursorPosition);
-            setInput(newInput);
-            setCursorPosition(prev => prev + inputEvent.data!.length);
-          }
-          break;
-          
-        case 'deleteContentBackward':
-          // Handle backspace
-          if (cursorPosition > 0) {
-            const newInput = input.slice(0, cursorPosition - 1) + input.slice(cursorPosition);
-            setInput(newInput);
-            setCursorPosition(prev => prev - 1);
-          }
-          break;
-          
-        case 'deleteContentForward':
-          // Handle delete key
-          if (cursorPosition < input.length) {
-            const newInput = input.slice(0, cursorPosition) + input.slice(cursorPosition + 1);
-            setInput(newInput);
-          }
-          break;
-          
-        case 'deleteWordBackward':
-          // Handle Ctrl+Backspace or similar
-          if (cursorPosition > 0) {
-            const beforeCursor = input.slice(0, cursorPosition);
-            const afterCursor = input.slice(cursorPosition);
-            const lastSpaceIndex = beforeCursor.trimEnd().lastIndexOf(' ');
-            const newCursorPos = lastSpaceIndex >= 0 ? lastSpaceIndex + 1 : 0;
-            setInput(input.slice(0, newCursorPos) + afterCursor);
-            setCursorPosition(newCursorPos);
-          }
-          break;
-          
-        case 'insertFromPaste':
-          // Handle paste
-          if (inputEvent.data) {
-            const newInput = input.slice(0, cursorPosition) + inputEvent.data + input.slice(cursorPosition);
-            setInput(newInput);
-            setCursorPosition(prev => prev + inputEvent.data!.length);
-          }
-          break;
-      }
-      
-      // Clear the hidden input value to prepare for next input
-      inputElement.value = '';
-    };
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      // Handle special keys that might not trigger input events
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        if (input.trim()) {
-          const command = input.trim();
-          processCommand(command);
-          setInputHistory(prev => [...prev, command]);
-          setHistoryIndex(-1);
-          setInput('');
-          setCursorPosition(0);
-        }
-      } else if (e.key === 'Escape') {
-        e.preventDefault();
-        onClose();
-      }
-    };
-    
-    const hiddenInput = hiddenInputRef.current;
-    if (hiddenInput) {
-      hiddenInput.addEventListener('input', handleInput);
-      hiddenInput.addEventListener('keydown', handleKeyDown);
-      // Focus the input when terminal is opened on mobile
-      hiddenInput.focus();
-    }
-    
-    return () => {
-      if (hiddenInput) {
-        hiddenInput.removeEventListener('input', handleInput);
-        hiddenInput.removeEventListener('keydown', handleKeyDown);
-      }
-    };
-  }, [isOpen, isMobile, input, cursorPosition, inputHistory, onClose]);
-
-
-  const processCommand = (command: string) => {
+  // Process terminal commands
+  const processCommand = useCallback((command: string) => {
     let output: React.ReactNode;
     let isError = false;
 
@@ -536,7 +440,104 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
     }
 
     setCommandHistory(prev => [...prev, { command, output, isError }]);
-  };
+  }, [setRegion, onClose]);
+
+  // Handle input from the hidden input field (for mobile)
+  useEffect(() => {
+    if (!isOpen || !isMobile) return;
+    
+    const handleInput = (e: Event) => {
+      const inputEvent = e as InputEvent;
+      const inputElement = e.target as HTMLInputElement;
+      
+      // Handle different input types from mobile keyboard
+      switch (inputEvent.inputType) {
+        case 'insertText':
+          if (inputEvent.data) {
+            // Add the character at cursor position
+            const newInput = input.slice(0, cursorPosition) + inputEvent.data + input.slice(cursorPosition);
+            setInput(newInput);
+            setCursorPosition(prev => prev + inputEvent.data!.length);
+          }
+          break;
+          
+        case 'deleteContentBackward':
+          // Handle backspace
+          if (cursorPosition > 0) {
+            const newInput = input.slice(0, cursorPosition - 1) + input.slice(cursorPosition);
+            setInput(newInput);
+            setCursorPosition(prev => prev - 1);
+          }
+          break;
+          
+        case 'deleteContentForward':
+          // Handle delete key
+          if (cursorPosition < input.length) {
+            const newInput = input.slice(0, cursorPosition) + input.slice(cursorPosition + 1);
+            setInput(newInput);
+          }
+          break;
+          
+        case 'deleteWordBackward':
+          // Handle Ctrl+Backspace or similar
+          if (cursorPosition > 0) {
+            const beforeCursor = input.slice(0, cursorPosition);
+            const afterCursor = input.slice(cursorPosition);
+            const lastSpaceIndex = beforeCursor.trimEnd().lastIndexOf(' ');
+            const newCursorPos = lastSpaceIndex >= 0 ? lastSpaceIndex + 1 : 0;
+            setInput(input.slice(0, newCursorPos) + afterCursor);
+            setCursorPosition(newCursorPos);
+          }
+          break;
+          
+        case 'insertFromPaste':
+          // Handle paste
+          if (inputEvent.data) {
+            const newInput = input.slice(0, cursorPosition) + inputEvent.data + input.slice(cursorPosition);
+            setInput(newInput);
+            setCursorPosition(prev => prev + inputEvent.data!.length);
+          }
+          break;
+      }
+      
+      // Clear the hidden input value to prepare for next input
+      inputElement.value = '';
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Handle special keys that might not trigger input events
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (input.trim()) {
+          const command = input.trim();
+          processCommand(command);
+          setInputHistory(prev => [...prev, command]);
+          setHistoryIndex(-1);
+          setInput('');
+          setCursorPosition(0);
+        }
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
+      }
+    };
+    
+    const hiddenInput = hiddenInputRef.current;
+    if (hiddenInput) {
+      hiddenInput.addEventListener('input', handleInput);
+      hiddenInput.addEventListener('keydown', handleKeyDown);
+      // Focus the input when terminal is opened on mobile
+      hiddenInput.focus();
+    }
+    
+    return () => {
+      if (hiddenInput) {
+        hiddenInput.removeEventListener('input', handleInput);
+        hiddenInput.removeEventListener('keydown', handleKeyDown);
+      }
+    };
+  }, [isOpen, isMobile, input, cursorPosition, inputHistory, onClose, processCommand]);
+
 
   const toggleMaximize = () => {
     // If terminal is minimized, first restore it to normal before maximizing
