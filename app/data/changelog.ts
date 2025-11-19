@@ -10,6 +10,39 @@ export type ChangelogEntry = {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: '4.1.0',
+    date: '2025-11-19',
+    type: 'minor',
+    changes: [
+      {
+        category: 'Added',
+        items: [
+          'Dynamic metadata and favicon configuration',
+          'SEO improvements with sitemap.xml and robots.txt generation',
+          'New terminal commands: whoami, date, echo, theme',
+          'WidgetWrapper component for consistent widget styling',
+        ],
+      },
+      {
+        category: 'Changed',
+        items: [
+          'Refactored page.tsx into modular widget components',
+          'Updated drag handle position and spacing for better UX',
+          'Improved metadata to use dynamic portfolio data with fallbacks',
+        ],
+      },
+      {
+        category: 'Fixed',
+        items: [
+          'Resolved double input issue in terminal on desktop devices',
+          'Fixed mobile keyboard detection logic to use touch capability',
+          'Corrected TopNav dropdown visibility on desktop',
+          'Prevented duplicate CloudShell option in mobile menu on desktop',
+        ],
+      },
+    ],
+  },
+  {
     version: '4.0.2',
     date: '2025-11-15',
     type: 'patch',

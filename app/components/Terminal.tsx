@@ -63,11 +63,14 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
     setPreviousIsOpen(isOpen);
   }, [isOpen, previousIsOpen]);
 
-  // Check if device is mobile
+  // Check if device is actually a mobile/tablet (has touch capability)
   useEffect(() => {
     const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 768); // 768px is standard breakpoint for tablets
-      // Set initial terminal size based on device type
+      // Check for touch capability rather than screen size
+      // This distinguishes actual mobile devices from desktop responsive mode
+      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      setIsMobile(isTouchDevice);
+      // Set initial terminal size based on screen width (still useful for UI)
       setTerminalSize(window.innerWidth < 768 ? 'maximized' : 'normal');
     };
     
@@ -110,14 +113,14 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
         return;
       }
 
-      // Only capture from our hidden input or from document when not on mobile
-      if (e.target !== hiddenInputRef.current && isMobile) {
+      // On mobile, ignore only printable characters (we handle them via input event)
+      // But allow control keys like Enter, Backspace, Arrows, etc.
+      if (isMobile && e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
         return;
       }
 
-      // Don't capture if typing in another input field (except our hidden input)
-      if ((e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement)
-          && e.target !== hiddenInputRef.current) {
+      // Don't capture if typing in another input field
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
         return;
       }
 
@@ -126,10 +129,7 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
         return;
       }
 
-      // No need to prevent default for our hidden input
-      if (e.target !== hiddenInputRef.current) {
-        e.preventDefault(); // Prevent default browser behavior
-      }
+      e.preventDefault(); // Prevent default browser behavior
 
       if (e.key === 'Enter') {
         if (input.trim()) {
@@ -249,13 +249,6 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
         const newInput = input.slice(0, cursorPosition) + inputEvent.data + input.slice(cursorPosition);
         setInput(newInput);
         setCursorPosition(prev => prev + 1);
-      } else if (inputEvent.inputType === 'deleteContentBackward') {
-        // Handle backspace
-        if (cursorPosition > 0) {
-          const newInput = input.slice(0, cursorPosition - 1) + input.slice(cursorPosition);
-          setInput(newInput);
-          setCursorPosition(prev => prev - 1);
-        }
       }
       
       // Clear the hidden input value to prepare for next input
@@ -596,16 +589,17 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
                 </div>
                 
                 {/* Hidden input field to capture mobile keyboard input */}
-                <input
-                  ref={hiddenInputRef}
-                  type="text"
-                  className={`opacity-0 absolute ${isMobile ? '' : 'h-0 w-0'} pointer-events-none`}
-                  autoCapitalize="none"
-                  autoComplete="off"
-                  autoCorrect="off"
-                  spellCheck="false"
-                  aria-hidden={!isMobile}
-                />
+                {isMobile && (
+                  <input
+                    ref={hiddenInputRef}
+                    type="text"
+                    className="opacity-0 absolute h-full w-full top-0 left-0 pointer-events-none"
+                    autoCapitalize="none"
+                    autoComplete="off"
+                    autoCorrect="off"
+                    spellCheck="false"
+                  />
+                )}
               </div>
             )}
           </div>

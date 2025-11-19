@@ -436,21 +436,21 @@ export default function TopNav({ onOpenTerminal }: { onOpenTerminal?: () => void
               {portfolioData.personal.name}
             </span>
             <span className="sm:hidden">AP</span>
-            <ChevronDown size={12} className="sm:w-[14px] sm:h-[14px]" />
+            <ChevronDown size={12} className="sm:hidden" />
           </button>
 
           {/* Mobile Menu Dropdown */}
           {showMobileMenu && (
             <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded shadow-lg z-50">
               <div className="py-1">
-                {/* Mobile Terminal Option */}
+                {/* Mobile Terminal Option - Only show on mobile since desktop has the icon */}
                 {onOpenTerminal && (
                   <button
                     onClick={() => {
                       onOpenTerminal();
                       setShowMobileMenu(false);
                     }}
-                    className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center space-x-2"
+                    className="sm:hidden w-full px-4 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center space-x-2"
                   >
                     <Terminal size={16} className="text-gray-900 dark:text-white" />
                     <span className="text-gray-900 dark:text-white">CloudShell</span>
