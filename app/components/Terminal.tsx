@@ -298,6 +298,10 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
           <div className="pl-4 text-gray-400">Example: list projects, list certifications</div>
           <div><span className="text-green-400 font-mono">region [name]</span> - Change the current region</div>
           <div className="pl-4 text-gray-400">Available regions: us-east-1, eu-west-1, ap-south-1</div>
+          <div><span className="text-green-400 font-mono">theme [mode]</span> - Change theme (light/dark/system)</div>
+          <div><span className="text-green-400 font-mono">whoami</span> - Display current user</div>
+          <div><span className="text-green-400 font-mono">date</span> - Display current date and time</div>
+          <div><span className="text-green-400 font-mono">echo [text]</span> - Display a line of text</div>
           <div><span className="text-green-400 font-mono">contact</span> - Show contact information</div>
           <div><span className="text-green-400 font-mono">about</span> - Show information about this portfolio</div>
           <div><span className="text-green-400 font-mono">version</span> - Show terminal version</div>
@@ -307,6 +311,34 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
     } else if (commandLower === 'clear') {
       setCommandHistory([]);
       return;
+    } else if (commandLower === 'whoami') {
+      output = <div>{portfolioData.personal.name.toLowerCase().replace(/\s+/g, '')}</div>;
+    } else if (commandLower === 'date') {
+      output = <div>{new Date().toString()}</div>;
+    } else if (commandLower.startsWith('echo ')) {
+      output = <div>{args.join(' ')}</div>;
+    } else if (commandLower.startsWith('theme ')) {
+      const theme = args[0]?.toLowerCase();
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+        output = <div>Theme set to <span className="text-yellow-400">dark</span></div>;
+      } else if (theme === 'light') {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+        output = <div>Theme set to <span className="text-yellow-400">light</span></div>;
+      } else if (theme === 'system') {
+        localStorage.removeItem('theme');
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        output = <div>Theme set to <span className="text-yellow-400">system</span></div>;
+      } else {
+        output = <div>Usage: theme [light|dark|system]</div>;
+        isError = true;
+      }
     } else if (commandLower === 'version') {
       // Get the latest version from the changelog
       const latestVersion = changelog[0].version;

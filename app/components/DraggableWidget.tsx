@@ -28,6 +28,7 @@ export default function DraggableWidget({ id, children }: DraggableWidgetProps) 
   return (
     <div ref={setNodeRef} style={style} className="relative group">
       {/* Drag Handle */}
+      {/* Drag Handle */}
       <div
         {...attributes}
         {...listeners}
