@@ -516,6 +516,14 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
           setInput('');
           setCursorPosition(0);
         }
+      } else if (e.key === 'Backspace') {
+        // Handle backspace as fallback (some mobile keyboards might not trigger input event)
+        e.preventDefault();
+        if (cursorPosition > 0) {
+          const newInput = input.slice(0, cursorPosition - 1) + input.slice(cursorPosition);
+          setInput(newInput);
+          setCursorPosition(prev => prev - 1);
+        }
       } else if (e.key === 'Escape') {
         e.preventDefault();
         onClose();
