@@ -2,6 +2,16 @@
 
 An AWS Console-inspired portfolio website with an interactive terminal interface. This project provides a unique way to showcase your skills, projects, and experience in a familiar AWS Console layout.
 
+## Tech Stack
+
+![Next.js](https://img.shields.io/badge/Next.js-16.0.1-000000?logo=next.js)
+![React](https://img.shields.io/badge/React-19.2.0-61DAFB?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-3178C6?logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4.1.16-06B6D4?logo=tailwindcss)
+![Framer Motion](https://img.shields.io/badge/Framer%20Motion-12.23.24-0055FF?logo=framer)
+![Node.js](https://img.shields.io/badge/Node.js-22%2B-339933?logo=node.js)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 ## Features
 
 - **AWS Console-inspired UI**: Complete with sidebar navigation, top nav, and responsive design
