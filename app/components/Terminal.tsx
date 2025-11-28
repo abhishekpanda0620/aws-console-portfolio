@@ -428,10 +428,11 @@ export default function Terminal({ isOpen, onClose }: TerminalProps) {
       
       output = (
         <div>
-          <div className="text-yellow-400 font-semibold mb-1">About This Portfolio:</div>
-          <div>This is an AWS Console-inspired portfolio showcasing {name}&apos;s work, skills, and experience.</div>
+          <div className="text-yellow-400 font-semibold mb-1">About {name}:</div>
+          <div className="whitespace-pre-wrap">{portfolioData.personal.bio}</div>
+          <div className="mt-4 text-gray-500">----------------------------------------</div>
           <div className="mt-1">Built with Next.js, React, and TailwindCSS.</div>
-          <div className="mt-1">This is an open-source project. Feel free to fork and customize it for your own portfolio.</div>
+          <div className="mt-1">This is an open-source project. Feel free to fork and customize it.</div>
         </div>
       );
     } else {

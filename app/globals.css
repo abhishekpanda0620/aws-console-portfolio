@@ -5,8 +5,10 @@
 @theme {
   --color-aws-blue: #232f3e;
   --color-aws-accent: #ff9900;
+  --color-aws-warm-accent: #ffb347; /* New warmer accent */
   --color-aws-dark: #16191f;
   --color-aws-darker: #0d1117;
+  --color-bg-subtle: #f8f9fa; /* Lighter background for contrast */
 }
 
 html, body, #__next {

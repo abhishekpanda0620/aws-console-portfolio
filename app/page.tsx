@@ -36,11 +36,13 @@ import SkillsWidget from "./components/widgets/SkillsWidget";
 import BlogWidget from "./components/widgets/BlogWidget";
 import AchievementsWidget from "./components/widgets/AchievementsWidget";
 
+import BioWidget from "./components/widgets/BioWidget";
+
 // Widget IDs - draggable widgets
 const defaultWidgetOrder = [
+  "bio",
   "projects",
   "certifications",
-  "experience",
   "skills",
   "blog",
   "achievements",
@@ -115,9 +117,9 @@ export default function PortfolioConsole() {
 
   // Widget components
   const widgets: Record<string, ReactNode> = {
+    bio: <BioWidget />,
     projects: <ProjectsWidget />,
     certifications: <CertificationsWidget />,
-    experience: <ExperienceWidget />,
     skills: <SkillsWidget />,
     blog: <BlogWidget />,
     achievements: <AchievementsWidget />,
@@ -244,7 +246,7 @@ export default function PortfolioConsole() {
       >
         <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-300 dark:border-gray-700">
           <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
-            🗺️ {t('careerJourney')}
+            {t('careerJourney')}
           </h2>
 
         </div>

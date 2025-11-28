@@ -7,7 +7,7 @@ export const portfolioData = {
     linkedin: "https://www.linkedin.com/in/abhishek-panda1999/",
     github: "https://github.com/abhishekpanda0620",
     experience: "3+ years",
-    bio: "Experienced Software Development Engineer specializing in cloud-native applications, microservices architecture, and full-stack development with Multi-cloud expertise.",
+    bio: "I’m a Software Development Engineer at HyScaler, mainly working with cloud and DevOps tools. Day to day, you’ll usually find me somewhere between AWS, GCP, Kubernetes, and Terraform trying to keep things running smoothly and automate whatever I can.\n\nI like digging into messy infra problems, speeding up slow pipelines, and finding small ways to cut down cloud costs. Lately I’ve been using AI tools to make the boring parts of engineering a bit easier.\n\nI’m certified on GCP (PCA + ACE) and have Azure fundamentals as well.\n\nAlways trying to pick up something new. If you’re into Cloud, DevOps, or AI, feel free to reach out.",
   },
 
   skills: {
@@ -292,10 +292,42 @@ export const portfolioData = {
   ],
 
   achievements: [
-    "Developed and deployed CI/CD pipelines with GitLab CI, Amazon EKS, and Helm, reducing manual efforts by 90%.",
-    "Built an AI-powered feedback bot with Amazon Lex and Bedrock, improving response rates by 25%.",
-    "Upgraded the EKS cluster to bring out it from the extended support and saved 40% of cost along with nodegroups and addons",
-    "Optimized docker image in CI/CD to reduce its size and optimize the performance by 60% using multi stage build and reducing the layers",
+    {
+      metric: "90%",
+      description: "Developed and deployed CI/CD pipelines with GitLab CI, Amazon EKS, and Helm, reducing manual efforts by 90%.",
+    },
+    {
+      metric: "0",
+      description: "Used New relic as the APM tools for log and alert analysis to ensure 0 Downtime.",
+    },
+    {
+      metric: "100%",
+      description: "Automated backup & recovery workflows using AWS CloudWatch enhancing system uptime and security.",
+    },
+    {
+      metric: "60%",
+      description: "Optimized docker image in CI/CD to reduce its size and optimize the performance by 60% using multi stage build and reducing the layers.",
+    },
+    {
+      metric: "40%",
+      description: "Upgraded the EKS cluster to bring out it from the extended support and saved 40% of cost along with nodegroups and addons",
+    },
+    {
+      metric: "70%",
+      description: "Used CloudFormation for infrastructure management and reduced the manual intervation by 70%.",
+    },
+    {
+      metric: "25%",
+      description: "Built an AI-powered feedback bot with Amazon Lex and Bedrock, improving response rates by 25%.",
+    },
+    {
+      metric: "40%",
+      description: "Led database optimization efforts, boosting query performance by 40% for large datasets.",
+    },
+    {
+      metric: "60%",
+      description: "Used VueJs and Laravel to optimize an Analytics webapp and improved the UX there for the User and which resulted in 60% more users interaction than usual",
+    },
   ],
 
   blog: [
